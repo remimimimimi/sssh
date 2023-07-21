@@ -23,11 +23,11 @@ include unix/socket.fs
 create socket-address
   socket-address sockaddr_in dup allot erase
 
+12321 htons constant ssh-port
+
 \ XXX: On some architectures byte order may be different To fix that
 \ we should use inet_pton function or some of the alternatives to
 \ convert string to appropriate binary representation of address.
-12321 htons constant ssh-port
-\ FIXME: use inet_addr or inet_pton to convert
 16777343 constant localhost
 
 \ Sends hello to socket
