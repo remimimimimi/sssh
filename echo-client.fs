@@ -28,7 +28,7 @@ create socket-address
 \ XXX: On some architectures byte order may be different To fix that
 \ we should use inet_pton function or some of the alternatives to
 \ convert string to appropriate binary representation of address.
-16777343 constant localhost
+$100007f constant localhost \ htonl
 
 \ Sends hello to socket
 : send-hello-data ( -- )
