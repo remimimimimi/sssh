@@ -13,7 +13,7 @@ include unix/socket.fs
 
 : connect-socket ( socket-fd socket-address -- )
   over -rot sockaddr_in connect
-  ~~
+
   dup -1 = if
     close
     s" connect failed" exception throw
