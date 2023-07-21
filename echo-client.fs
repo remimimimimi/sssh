@@ -7,14 +7,14 @@ include unix/socket.fs
 : open-socket ( -- socket-fd )
   PF_INET SOCK_STREAM IPPROTO_TCP socket
 
-  dup if
+  dup -1 = if
     s" cannot create socket" exception throw
   then ;
 
 : connect-socket ( socket-fd socket-address -- )
   over -rot sockaddr_in connect
 
-  dup if
+  dup -1 = if
     close
     s" connect failed" exception throw
   then drop ;
