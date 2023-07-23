@@ -25,6 +25,11 @@ include unix/socket.fs
 create socket-address
   socket-address sockaddr_in dup allot erase
 
+: init-socket-address ( address port -- )
+  AF_INET socket-address family w!
+  socket-address sin_addr l!
+  socket-address port w! ;
+
 12321 htons constant ssh-port
 
 \ XXX: On some architectures byte order may be different To fix that
@@ -34,9 +39,7 @@ $100007f constant localhost \ htonl
 
 \ Sends hello to socket
 : send-hello-data ( -- )
-  AF_INET socket-address family w!
-  ssh-port socket-address port w!
-  localhost socket-address sin_addr l!
+  localhost ssh-port init-socket-address
 
   open-socket
   cr ." Socket opened successfully!"
