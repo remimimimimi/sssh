@@ -8,14 +8,12 @@ include unix/socket.fs
 : ce{ ( value | -1 -- ) -1 = if ;
 : ced{ ( value | -1 -- value ) dup e{ ;
 : | ( c-addr u -- R:c-addr R:u ) 2>r ;
-: }ce ( c-ddr u -- value? ) exception throw then ;
-: }ced ( R:c-ddr R:u -- value? ) 2r> }ce ;
-
+: }ce ( c-addr u -- value? ) exception throw then ;
+: }ced ( R:c-addr R:u -- value? ) 2r> }ce ;
 
 : open-socket ( -- socket-fd )
   PF_INET SOCK_STREAM IPPROTO_TCP socket
-  ced{ s" cannot create socket" }ce
-;
+  ced{ s" cannot create socket" }ce ;
 
 : connect-socket ( socket-fd socket-address -- )
   over -rot sockaddr_in connect
