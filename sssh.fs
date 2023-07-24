@@ -1,6 +1,6 @@
-require etags.fs
+require ./trans.fs
 
-include unix/socket.fs
+require unix/socket.fs
 
 6 Constant IPPROTO_TCP
 
@@ -36,7 +36,7 @@ create socket-address
 $100007f constant localhost \ htonl
 
 \ Sends hello to socket
-: send-hello-data ( -- )
+: establish-ssh-connection ( -- )
   localhost ssh-port init-socket-address
 
   open-socket
@@ -45,9 +45,8 @@ $100007f constant localhost \ htonl
   cr ." Socket connected successfully!"
 
   cr ." Sending to " ssh-port . cr
-  dup s" hello" 0 send
-  close ;
+  dup protocol-version 0 send
 
-send-hello-data
-2 ms
-bye
+  ~~
+
+  close ;
