@@ -5,11 +5,11 @@ require unix/socket.fs
 6 Constant IPPROTO_TCP
 
 \ Handle c function error value (-1)
-: ce{ ( value | -1 -- ) -1 = if ;
-: ced{ ( value | -1 -- value ) dup e{ ;
-: | ( c-addr u -- R:c-addr R:u ) 2>r ;
-: }ce ( c-addr u -- value? ) exception throw then ;
-: }ced ( R:c-addr R:u -- value? ) 2r> }ce ;
+: ce{ ( value | -1 -- ) ]] -1 = if [[ ; immediate
+: ced{ ( value | -1 -- value ) ]] dup ce{ [[ ; immediate
+: | ( c-addr u -- R:c-addr R:u ) ]] 2>r [[ ; immediate
+: }ce ( c-addr u -- value? ) ]] exception throw then [[ ; immediate
+: }ced ( R:c-addr R:u -- value? ) ]] 2r> }ce [[ ; immediate
 
 : open-socket ( -- socket-fd )
   PF_INET SOCK_STREAM IPPROTO_TCP socket
